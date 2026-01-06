@@ -10,5 +10,12 @@ namespace Web.Mvc.Controllers
         {
             return Content($"Hello {User.FindFirst("name")?.Value}");
         }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult Admin()
+        {
+            return Content("Admin area");
+        }
+
     }
 }
