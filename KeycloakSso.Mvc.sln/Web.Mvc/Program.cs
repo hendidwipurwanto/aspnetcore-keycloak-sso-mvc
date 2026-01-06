@@ -77,6 +77,23 @@ builder.Services.AddAuthentication(options =>
             }
 
             return Task.CompletedTask;
+        },
+        OnRedirectToIdentityProviderForSignOut = context =>
+        {
+            var logoutUri =
+                $"{options.Authority}/protocol/openid-connect/logout";
+
+            var postLogoutRedirectUri = context.Properties.RedirectUri;
+            if (!string.IsNullOrEmpty(postLogoutRedirectUri))
+            {
+                logoutUri +=
+                    $"?post_logout_redirect_uri={Uri.EscapeDataString(postLogoutRedirectUri)}";
+            }
+
+            context.Response.Redirect(logoutUri);
+            context.HandleResponse();
+
+            return Task.CompletedTask;
         }
     };
 });
