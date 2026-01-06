@@ -48,6 +48,12 @@ builder.Services.AddAuthentication(options =>
         OnTokenValidated = context =>
         {
             var identity = context.Principal!.Identity as ClaimsIdentity;
+            // Map preferred_username to Name keycloack version 26.4.4
+            var preferredUsername = context.Principal.FindFirst("preferred_username")?.Value;
+            if (!string.IsNullOrEmpty(preferredUsername))
+            {
+                identity!.AddClaim(new Claim(ClaimTypes.Name, preferredUsername));
+            }
 
             // === Keycloak realm roles ===
             var realmAccess = context.Principal.FindFirst("realm_access");
