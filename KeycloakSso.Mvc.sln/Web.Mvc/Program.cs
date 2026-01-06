@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Web.Core.Services.Abstractions;
+using Web.Mvc.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 // MVC
 // =============================
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 // =============================
 // Authentication
@@ -48,7 +52,7 @@ builder.Services.AddAuthentication(options =>
         OnTokenValidated = context =>
         {
             var identity = context.Principal!.Identity as ClaimsIdentity;
-            // Map preferred_username to Name keycloack version 26.4.4
+            // Map preferred_username to Name
             var preferredUsername = context.Principal.FindFirst("preferred_username")?.Value;
             if (!string.IsNullOrEmpty(preferredUsername))
             {
