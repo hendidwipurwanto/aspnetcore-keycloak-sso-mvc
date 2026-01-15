@@ -9,41 +9,55 @@
     <link rel="stylesheet" href="~/Web.Mvc.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web.Mvc</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div class="d-flex flex-column vh-150">
+        <div class="d-flex flex-grow-1">
+            <!-- Sidebar -->
+            <div class="bg-primary text-white vh-100 p-3" style="width: 250px;">
+                <h4>Crudify|Admin</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="/dashboard.html" class="nav-link text-white">Dashboard</a></li>
+                    <li class="nav-item"><a href="/login.html" class="nav-link text-white">Login Page</a></li>
+                    <li class="nav-item"><a href="/register.html" class="nav-link text-white">Register Page</a></li>
+                    <li class="nav-item"><a href="/formpage.html" class="nav-link text-white">Form Page</a></li>
+                    <li class="nav-item"><a href="/tablePage.html" class="nav-link text-white">Table Page</a></li>
+                    <li class="nav-item"><a href="/error401.html" class="nav-link text-white">Error 401</a></li>
+                    <li class="nav-item"><a href="/error403.html" class="nav-link text-white">Error 403</a></li>
+                    <li class="nav-item"><a href="/error404.html" class="nav-link text-white">Error 404</a></li>
+                    <li class="nav-item"><a href="/error500.html" class="nav-link text-white">Error 500</a></li>
+                </ul>
+            </div>
+
+            <!-- Content -->
+            <div class="p-1 flex-grow-1">
+                <div class="p-1 flex-grow-1">
+                    <!-- Top Navbar -->
+                    <nav class="navbar navbar-expand-lg navbar-white bg-white rounded shadow-sm mb-4">
+
+                        <div class="container-fluid justify-content-end">
+                            <span class="navbar-text me-3">
+                                Hi, Admin
+                            </span>
+                            <a href="/logout.html" class="btn btn-outline-danger btn-sm">Logout</a>
+                        </div>
+                    </nav>
+
+
+                    <!-- Cards Section -->
+                    <div class="row">
+                        @RenderBody()
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Web.Mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <!-- Footer -->
+        <footer class="bg-primary text-white text-center p-2">
+            <p>Copyright © Crudify|Admin 2025</p>
+        </footer>
 </body>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </html>

@@ -15,6 +15,11 @@ namespace Web.Mvc.Controllers
         {
             _currentUser = currentUser;
         }
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [Authorize]
         public IActionResult Login()
         {

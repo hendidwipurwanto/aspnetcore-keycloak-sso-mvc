@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.Mvc.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-primary">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="w-50">
+            <!-- Login Form -->
+            <div class="card p-4 shadow-lg" id="loginForm">
+                <h3 class="text-center">Login</h3>
+                <form>
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <p class="text-center mt-3">Don't have an account? <a href="/register.html">Register</a></p>
+                    <div class="d-flex align-items-center my-3">
+                        <div class="flex-grow-1 border-top"></div>
+                        <span class="mx-2 text-muted small">OR</span>
+                        <div class="flex-grow-1 border-top"></div>
+                    </div>
+
+                    <a href="/sso/login" class="btn btn-outline-primary w-100 fw-semibold">
+                        Login with SSO
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center p-2">
+        <p>Copyright © Crudify|Admin 2025</p>
+    </footer>
+</body>
+</html>
