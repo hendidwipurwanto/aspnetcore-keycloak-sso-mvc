@@ -7,7 +7,7 @@ using Web.Core.Services.Abstractions;
 
 namespace Web.Mvc.Controllers
 {
-    [Authorize]
+
     public class AccountController : Controller
     {
         private readonly ICurrentUser _currentUser;
@@ -15,17 +15,19 @@ namespace Web.Mvc.Controllers
         {
             _currentUser = currentUser;
         }
+        [Authorize]
         public IActionResult Login()
         {
             return Content($"Hello {_currentUser.Username}");
         }
-        [HttpPost]
+        [HttpGet, HttpPost]
+        [Authorize]
         public IActionResult Logout()
         {
             return SignOut(
                 new AuthenticationProperties
                 {
-                    RedirectUri = "/"
+                    RedirectUri = $"{Request.Scheme}://{Request.Host}/"
                 },
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 OpenIdConnectDefaults.AuthenticationScheme

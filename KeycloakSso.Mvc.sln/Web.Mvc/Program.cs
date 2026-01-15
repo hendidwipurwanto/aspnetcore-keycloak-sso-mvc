@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -80,14 +81,24 @@ builder.Services.AddAuthentication(options =>
         },
         OnRedirectToIdentityProviderForSignOut = context =>
         {
+            var idToken = context.HttpContext
+            .GetTokenAsync("id_token")
+            .GetAwaiter()
+            .GetResult();
+
             var logoutUri =
-                $"{options.Authority}/protocol/openid-connect/logout";
+            $"{options.Authority}/protocol/openid-connect/logout";
+
+            if (!string.IsNullOrEmpty(idToken))
+            {
+            logoutUri += $"?id_token_hint={idToken}";
+            }
 
             var postLogoutRedirectUri = context.Properties.RedirectUri;
             if (!string.IsNullOrEmpty(postLogoutRedirectUri))
             {
-                logoutUri +=
-                    $"?post_logout_redirect_uri={Uri.EscapeDataString(postLogoutRedirectUri)}";
+            logoutUri +=
+            $"&post_logout_redirect_uri={Uri.EscapeDataString(postLogoutRedirectUri)}";
             }
 
             context.Response.Redirect(logoutUri);
