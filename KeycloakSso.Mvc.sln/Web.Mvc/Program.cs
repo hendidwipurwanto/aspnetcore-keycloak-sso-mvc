@@ -52,53 +52,29 @@ builder.Services.AddAuthentication(options =>
     {
         OnTokenValidated = context =>
         {
-            var identity = context.Principal!.Identity as ClaimsIdentity;
-            // Map preferred_username to Name
-            var preferredUsername = context.Principal.FindFirst("preferred_username")?.Value;
-            if (!string.IsNullOrEmpty(preferredUsername))
-            {
-                identity!.AddClaim(new Claim(ClaimTypes.Name, preferredUsername));
-            }
-
-            // === Keycloak realm roles ===
-            var realmAccess = context.Principal.FindFirst("realm_access");
-            if (realmAccess != null)
-            {
-                var roles = System.Text.Json.JsonDocument
-                    .Parse(realmAccess.Value)
-                    .RootElement
-                    .GetProperty("roles")
-                    .EnumerateArray()
-                    .Select(r => r.GetString());
-
-                foreach (var role in roles!)
-                {
-                    identity!.AddClaim(new Claim(ClaimTypes.Role, role!));
-                }
-            }
-
+            KeycloakClaimMapper.Map(context.Principal!);
             return Task.CompletedTask;
         },
         OnRedirectToIdentityProviderForSignOut = context =>
         {
             var idToken = context.HttpContext
-            .GetTokenAsync("id_token")
-            .GetAwaiter()
-            .GetResult();
+                .GetTokenAsync("id_token")
+                .GetAwaiter()
+                .GetResult();
 
             var logoutUri =
-            $"{options.Authority}/protocol/openid-connect/logout";
+                $"{options.Authority}/protocol/openid-connect/logout";
 
             if (!string.IsNullOrEmpty(idToken))
             {
-            logoutUri += $"?id_token_hint={idToken}";
+                logoutUri += $"?id_token_hint={idToken}";
             }
 
             var postLogoutRedirectUri = context.Properties.RedirectUri;
             if (!string.IsNullOrEmpty(postLogoutRedirectUri))
             {
-            logoutUri +=
-            $"&post_logout_redirect_uri={Uri.EscapeDataString(postLogoutRedirectUri)}";
+                logoutUri +=
+                    $"&post_logout_redirect_uri={Uri.EscapeDataString(postLogoutRedirectUri)}";
             }
 
             context.Response.Redirect(logoutUri);
