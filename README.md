@@ -268,9 +268,8 @@ Potential improvements:
 This project demonstrates how to implement **enterprise authentication using Keycloak and ASP.NET Core MVC**.
 
 It can be used as:
-
-* learning resource
-* authentication starter template
+* authentication starter template for ASP.NET Core projects
+* reference implementation for enterprise SSO integration
 * developer portfolio project
 
 ---
@@ -279,5 +278,4 @@ It can be used as:
 
 **Hendi Dwi Purwanto**
 
-ASP.NET Developer
-Building scalable web applications and SaaS systems.
+Senior .NET Backend Engineer
